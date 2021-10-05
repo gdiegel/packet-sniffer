@@ -23,12 +23,12 @@ public class Main {
     private static final Logger LOG = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) throws SocketException, PcapNativeException, NotOpenException {
-        final String interfaceName = (args.length > 0) ? args[0] : "en0";
+        final String interfaceName = args.length > 0 ? args[0] : "en0";
         final NetworkInterface networkInterface = NetworkInterface.getByName(interfaceName);
         printInfo(networkInterface);
-        final PcapNetworkInterface en0 = Pcaps.getDevByName("en0");
-        LOG.debug("Link layer addresses: {}", en0.getLinkLayerAddresses());
-        try (final PcapHandle handle = en0.openLive(65536, PROMISCUOUS, 10)) {
+        final PcapNetworkInterface pcapNetworkInterface = Pcaps.getDevByName(interfaceName);
+        LOG.debug("Link layer addresses: {}", pcapNetworkInterface.getLinkLayerAddresses());
+        try (final PcapHandle handle = pcapNetworkInterface.openLive(65536, PROMISCUOUS, 10)) {
             LOG.debug(String.valueOf(handle.listDatalinks()));
 
             final PacketListener listener = packet ->
