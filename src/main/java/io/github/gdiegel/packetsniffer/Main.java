@@ -1,4 +1,4 @@
-package io.github.gdiegel.network_rat;
+package io.github.gdiegel.packetsniffer;
 
 import org.pcap4j.core.NotOpenException;
 import org.pcap4j.core.PacketListener;
@@ -32,7 +32,7 @@ public class Main {
             LOG.debug(String.valueOf(handle.listDatalinks()));
 
             final PacketListener listener = packet ->
-                    LOG.info("Packet at {}:\n{}", handle.getTimestamp(), packet.getPayload());
+                LOG.info("Packet at {}:\n{}", handle.getTimestamp(), packet.getPayload());
 
             try {
                 final ExecutorService executorService = Executors.newSingleThreadExecutor();
